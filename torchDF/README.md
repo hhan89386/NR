@@ -17,7 +17,7 @@ poetry install
 poe install-torch-cpu
 ```
 
-Here is presented offline and streaming implementation of DeepFilterNet3 on pure torch. Streaming model can be fully exported to ONNX using `model_onnx_export.py`.
+Here is presented offline and streaming implementation of DeepFilterNet3 on pure torch. Streaming model can be fully exported to ONNX using `model_onnx_export.py` and then converted to TensorFlow Lite with `model_tflite_export.py`.
 
 Every script and test have to run inside poetry enviroment.
 
@@ -35,6 +35,7 @@ poetry run python torch_df_streaming_minimal.py --audio-path examples/A1CIM28ZUC
 To convert model to onnx and run tests:
 ```
 poetry run python model_onnx_export.py --test --performance --inference-path examples/A1CIM28ZUCA8RX_M_Street_Near_Regular_SP_Mobile_Primary.wav --ort --simplify --profiling --minimal
+poetry run python model_tflite_export.py denoiser_model.onnx denoiser_model.tflite --optimizations DEFAULT
 ```
 
 I also changed the hop_size parameter from 480 to 512 to speed up the stft. And then finetuned 3 epoches to adapt the model to size 512. New fast model can be found in `models/` dir.  
@@ -54,6 +55,7 @@ How to convert new model to onnx:
 # cd torchDF
 unzip ../models/DeepFilterNet3_torchDF.zip -d ../models/
 python model_onnx_export.py --performance --minimal --simplify --ort --model-base-dir ../models/DeepFilterNet3_torchDF
+python model_tflite_export.py ../models/DeepFilterNet3_torchDF_onnx/denoiser_model.onnx ../models/DeepFilterNet3_torchDF_onnx/denoiser_model.tflite --optimizations DEFAULT
 ```
 
 

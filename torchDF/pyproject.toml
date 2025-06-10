@@ -44,6 +44,8 @@ onnx = "^1.14.0"
 onnxsim = "^0.4.33"
 onnxscript = "^0.1.0.dev20240131"
 onnxruntime-extensions = "^0.10.0"
+tensorflow = "^2.13"
+onnx-tf = "^1.10"
 
 [tool.poetry.extras]
 train = ["deepfilterdataloader", "icecream"]
